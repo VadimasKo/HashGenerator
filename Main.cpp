@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
-#include <bitset>
-#include <bit>
+#include <vector>
 
 using namespace std;
 
@@ -24,5 +23,13 @@ using namespace std;
 
 
 int main() {
-  cout<<"ODA_SOD_ASAP+DSAPD+SA_DSA-D"
+  string input = "9vbrJPPrMqhnt7Vv1ixd3QuQElP2MBfSJoiFXsyWMne88ILpxP6ajw7iRdara6g3U9baiqLg8snDQ6bRPeUDg53fuGdQEg7xXF2rwuseYrHe6OEJURnp8Fip7jr2Ofob";
+  vector<string> inputSections;
+  for(int i = 0; i <= input.length()-1; i+=64 ) {
+    inputSections.push_back(input.substr(i,i+64));
+  }
+  
+  for(string section : inputSections) {
+    cout<<section<<endl;
+  }
 }
