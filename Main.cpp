@@ -22,8 +22,7 @@ using namespace std;
 
 const int hashSize = 64;
 
-int main() {
-  string input = "9vbrJPPrMqhnt7Vv1ixd3QuQElP2MBfSJoiFXsyWMne88ILpxP6ajw7iRdara6g3U9baiqLg8snDQ6bRPeUDg53fuGdQEg7xXF2rwuseYrHe6OEJURnp8Fip7jr2Ofob11";
+vector<string> splitString(string input) {
   vector<string> inputSections;
 
   int i = 0;
@@ -37,6 +36,14 @@ int main() {
     size_t missingCharNr = hashSize - inputSections.back().size();
     inputSections.back().append(string(missingCharNr, '#'));
   } 
+
+  return inputSections;
+}
+
+
+int main() {
+  string input = "9vbrJPPrMqhnt7Vv1ixd3QuQElP2MBfSJoiFXsyWMne88ILpxP6ajw7iRdara6g3U9baiqLg8snDQ6bRPeUDg53fuGdQEg7xXF2rwuseYrHe6OEJURnp8Fip7jr2Ofob11";
+  vector<string> inputSections = splitString(input);
 
   for(string section : inputSections) {
     cout<<section<<"       "<<section.size()<<endl;
