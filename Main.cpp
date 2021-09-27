@@ -1,3 +1,4 @@
+#include <bitset>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -40,12 +41,19 @@ vector<string> splitString(string input) {
   return inputSections;
 }
 
+string stringToBinary (string input){
+  string binaryString = "";
+  for(char symbol : input) {
+     binaryString += bitset<8>(symbol).to_string();
+  }
+  return binaryString;
+}
 
 int main() {
   string input = "9vbrJPPrMqhnt7Vv1ixd3QuQElP2MBfSJoiFXsyWMne88ILpxP6ajw7iRdara6g3U9baiqLg8snDQ6bRPeUDg53fuGdQEg7xXF2rwuseYrHe6OEJURnp8Fip7jr2Ofob11";
   vector<string> inputSections = splitString(input);
 
   for(string section : inputSections) {
-    cout<<section<<"       "<<section.size()<<endl;
+    cout<<stringToBinary(section)<<endl;
   }
 }
