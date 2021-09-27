@@ -41,7 +41,7 @@ vector<string> splitString(string input) {
   return inputSections;
 }
 
-string stringToBinary (string input){
+string stringToBinary (string input) {
   string binaryString = "";
   for(char symbol : input) {
      binaryString += bitset<8>(symbol).to_string();
@@ -49,11 +49,26 @@ string stringToBinary (string input){
   return binaryString;
 }
 
+string andGate (string input1, string input2) {
+  string binaryString = "";
+  for(int i = 0; i<input1.size(); i++) {
+    binaryString.push_back(
+      (input1[i] == input2[i] && input1[i] == '1') ? '1' : '0' 
+    );
+  } 
+  return binaryString;
+}
+
 int main() {
   string input = "9vbrJPPrMqhnt7Vv1ixd3QuQElP2MBfSJoiFXsyWMne88ILpxP6ajw7iRdara6g3U9baiqLg8snDQ6bRPeUDg53fuGdQEg7xXF2rwuseYrHe6OEJURnp8Fip7jr2Ofob11";
   vector<string> inputSections = splitString(input);
+  string binaryString;
 
   for(string section : inputSections) {
-    cout<<stringToBinary(section)<<endl;
+    string buffer = stringToBinary(section);
+    binaryString = (binaryString.length() > 0) ? 
+      andGate(buffer, binaryString) : 
+      buffer;
+    cout<<binaryString<<endl;
   }
 }
