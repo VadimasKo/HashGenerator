@@ -8,6 +8,14 @@
 
 using namespace std;
 
+void getInputFromFile(string &input, string fileLocation);
+void getInputByHand(string &input);
+vector<string> stringSplit(string input);
+void convertToBitStrings(vector<string> &splits);
+string mergeBitStrings(vector<string> &splits);
+string binaryToHex(string input);
+
+
 const string initialKey = "1011110011011001010101101011001011000111001111110100101110010001011100000001011010101011010100111001001100011111010001000011111010101000000110010001110010110011010010101010010110001001110001001011110100000010110010000101110100100001101111010100011110001010";
 map<string, string> hexMap {
     {"0001", "1"},
@@ -26,16 +34,6 @@ map<string, string> hexMap {
     {"1110", "E"},
     {"1111", "F"},
 };
-
-
-void getInputFromFile(string &input, string fileLocation);
-void getInputByHand(string &input);
-vector<string> stringSplit(string input);
-void convertToBitStrings(vector<string> &splits);
-string mergeBitStrings(vector<string> &splits);
-string binaryToHex(string input);
-
-
 
 int main(int argc, char *argv[]) {
   string input;

@@ -23,24 +23,8 @@ class Timer {
     }
 };
 
-int callMd5(string line) {
-  system(("echo -n " +line + " | md5sum").c_str());
-  return 1;
-}
-
-double runTests(string command, string fileString) {
-  stringstream fileStream(fileString);
-  Timer timer;
-  timer.startClock();
-  string lineValue;
-  while(!fileStream.eof()) {
-    getline(fileStream, lineValue);
-    lineValue.insert(lineValue.begin(),'\"');
-    lineValue.push_back('\"');
-    (command == "md5sum") ? callMd5(lineValue) : system((command + lineValue).c_str());
-  }
-  return timer.calcDuration();
-}
+double runTests(string command, string fileString);
+int callMd5(string line);
 
 
 int main(int argc, char *argv[]) {
@@ -60,4 +44,21 @@ int main(int argc, char *argv[]) {
   cout<<"Duration of md5 hash generator "<<md5Duration<<"\n"; 
 }
 
-double RunTests(string command, stringstream filesream);
+double runTests(string command, string fileString) {
+  stringstream fileStream(fileString);
+  Timer timer;
+  timer.startClock();
+  string lineValue;
+  while(!fileStream.eof()) {
+    getline(fileStream, lineValue);
+    lineValue.insert(lineValue.begin(),'\"');
+    lineValue.push_back('\"');
+    (command == "md5sum") ? callMd5(lineValue) : system((command + lineValue).c_str());
+  }
+  return timer.calcDuration();
+}
+
+int callMd5(string line) {
+  system(("echo -n " +line + " | md5sum").c_str());
+  return 1;
+}
