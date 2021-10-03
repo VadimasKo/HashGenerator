@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
   vector<string> splits = stringSplit(input);
   convertToBitStrings(splits);
   string hash = binaryToHex(mergeBitStrings(splits));
-  cout<<hash;
+  cout<<"\t"<<hash<<endl;
 }
 
 
