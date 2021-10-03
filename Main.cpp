@@ -1,29 +1,12 @@
-#include <bitset>
-#include <iostream>
 #include <string>
 #include <vector>
+#include <iostream>
+#include <bitset>
 #include <map>
 
 using namespace std;
 
-
-/* Plan:
-  1) Divide string into 64 char sections
-  2) Convert Sections into binary strings
-  3) (Optional) Shift binary values
-  4) Merge Sections using AND gate
-  5) (Optional) Shift binary balues
-  6) Convert binary string into HEX string
-
-  Later: 
-  1) Create userInterface
-  2) Allow passing props by txt && then calling function
-  3) Measure
-  4+) BLA BLA BLA
-*/
-
-const int splitSize = 32;
-
+const string initialKey = "1011110011011001010101101011001011000111001111110100101110010001011100000001011010101011010100111001001100011111010001000011111010101000000110010001110010110011010010101010010110001001110001001011110100000010110010000101110100100001101111010100011110001010";
 map<string, string> hexMap {
     {"0001", "1"},
     {"0010", "2"},
@@ -40,74 +23,79 @@ map<string, string> hexMap {
     {"1101", "D"},
     {"1110", "E"},
     {"1111", "F"},
-  };
+};
 
+vector<string> stringSplit(string input);
+void convertToBitStrings(vector<string> &splits);
+string mergeBitStrings(vector<string> &splits);
+string binaryToHex(string input);
 
-
-vector<string> splitString(string input) {
-  vector<string> inputSections;
-
-  int i = 0;
-  while(i < input.size()) {
-    string buffer = input.substr(i, splitSize);
-    inputSections.push_back(buffer);
-    i+=splitSize;
-  }
-  
-  if(inputSections.back().length() < splitSize) {
-    size_t missingCharNr = splitSize - inputSections.back().size();
-    inputSections.back().append(string(missingCharNr, '#'));
-  } 
-
-  return inputSections;
-}
-
-string stringToBinary (string input) {
-  string binaryString = "";
-  for(char symbol : input) {
-     binaryString += bitset<8>(symbol).to_string();
-  }
-  return binaryString;
-}
-
-string andGate (string input1, string input2) {
-  string binaryString = "";
-  for(int i = 0; i<input1.size(); i++) {
-    binaryString.push_back(
-      (input1[i] == input2[i] && input1[i] == '1') ? '1' : '0' 
-    );
-  } 
-  return binaryString;
-}
-
-string bitShiftRight (string input) {
-  string output;
-  output.push_back(input[input.length()-1]);
-  output.append(string(input.begin(), input.end()-1));
-  return  output;
-}
 
 int main() {
-  string input = "b";
-  vector<string> inputSections = splitString(input);
-  string binaryString;
-  string hexString;
+  string input = "a";
+  vector<string> splits = stringSplit(input);
+  convertToBitStrings(splits);
+  string hash = binaryToHex(mergeBitStrings(splits));
+  cout<<hash;
+}
 
-  for(string section : inputSections) {
-    string buffer = stringToBinary(section);
-    binaryString = (binaryString.length() > 0) ? 
-      andGate(buffer, binaryString) :
-      buffer;
-    binaryString;
+vector<string> stringSplit(string input) {
+  int splitSize = 64;
+  vector<string> splits;
+
+  for(int i = 0; i < input.size(); i+=splitSize) {
+    splits.push_back(input.substr(i,splitSize));
   }
 
-  binaryString = bitShiftRight(binaryString);
-  binaryString = bitShiftRight(binaryString);
+  return splits;
+}
 
+void convertToBitStrings(vector<string> &splits) {
+  vector<string> bufferVector;
 
-  for(int i = 0; i < binaryString.length(); i+=4) {
-    hexString.append(hexMap[binaryString.substr(i,4)]);
+  for(string split : splits) {
+    string buffer;
+    for(char symbol : split) {
+      buffer.append(bitset<4>(symbol).to_string());
+    }
+    if(buffer.size() < 256) buffer.append(string(256 - buffer.size(),'0'));
+    bufferVector.push_back(buffer);
   }
-  cout<<hexString.length()<<endl;
-  cout<<hexString<<endl;
+
+  splits = bufferVector;
+}
+
+
+//manipulation functions 
+string andGate(string input1, string input2) {
+  string outPut;
+  for(int i = 0; i<input1.size(); i++) {
+    (input1[i] == input2[i] == 1) ? outPut.push_back('1') : outPut.push_back('0');
+  }
+  return outPut;
+}
+
+void shiftRight(string &input) {
+  input.insert(input.begin(), input[input.size()-1]);
+  input.pop_back();
+}
+
+string mergeBitStrings(vector<string> &splits) {
+  if(splits.size() < 3) splits.push_back(initialKey);
+
+  string mergedStrings = splits[0];
+  for(string split: splits) {
+    shiftRight(split);
+    mergedStrings = andGate(mergedStrings, split);
+  }
+  shiftRight(mergedStrings);
+  return mergedStrings;
+}
+
+string binaryToHex(string input) {
+  string output;
+  for(int i = 0; i < input.size(); i+=4) {
+    output.append(hexMap[input.substr(i,4)]);
+  }
+  return output;
 }
