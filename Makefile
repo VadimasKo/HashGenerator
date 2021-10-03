@@ -1,11 +1,11 @@
 main: Main.cpp
-	g++ Main.cpp -o HashGenerator
+	g++ Main.cpp -o HashGenerator.exe
 
 run: Main.cpp
-	g++ Main.cpp -o HashGenerator && ./HashGenerator
+	g++ Main.cpp -o HashGenerator.exe && ./HashGenerator.exe
 
 runControlledTests: Main.cpp
-	g++ Main.cpp -o HashGenerator
+	g++ Main.cpp -o HashGenerator.exe
 	#---------------------------------------
 	#       Running Controlled tests
 	#    1) file containing only a
@@ -25,5 +25,8 @@ runControlledTests: Main.cpp
 	./HashGenerator ControlledTestFiles/loremIpsum2.txt
 
 lineTest: LineTest.cpp
-	g++ LineTest.cpp -o LineTest
-	./LineTest ./ControlledTestFiles/konstitucija.txt
+	g++ LineTest.cpp -o LineTest.exe
+	./LineTest.exe ./ControlledTestFiles/konstitucija.txt
+
+generateRandom: GenerateRandom.cpp
+	g++ GenerateRandom.cpp -o GenerateRandom.exe && ./GenerateRandom.exe
