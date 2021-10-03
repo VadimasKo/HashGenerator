@@ -37,6 +37,27 @@ void generateUniquePairs(int size, string fileName) {
   file.close();
 }
 
+void generatingMinDifPairs(int size, string fileName) {
+  ofstream file;
+  string values;
+  for(int i = 0; i < 25000;  i++) {
+    string randString;
+    for(int j = 0; j<size; j++) {
+      randString.push_back(static_cast<char>(rnd()));
+    }
+    randString.push_back('\t');
+    randString += randString;
+    randString.pop_back();
+    randString.push_back('\n');
+    randString[0] = static_cast<char>(rnd());
+
+    values.append(randString);
+  }
+  file.open(fileName);
+  file<<values;
+  file.close();
+}
+
 int main() {
 //   genereate 100k of string pairs
 //   25k = 10
@@ -51,5 +72,14 @@ int main() {
   generateUniquePairs(500,"./RandomTestFiles/500.txt");
   cout<<" Generating pairs of length 1000... \n";
   generateUniquePairs(1000,"./RandomTestFiles/1000.txt");
+
+  cout<<"\n Generating min dif pairs of length 10... \n";
+  generatingMinDifPairs(10,"./RandomTestFiles/m10.txt");
+  cout<<" Generating min dif pairs of length 100... \n";
+  generatingMinDifPairs(100,"./RandomTestFiles/m100.txt");
+  cout<<" Generating min dif pairs of length 500... \n";
+  generatingMinDifPairs(500,"./RandomTestFiles/m500.txt");
+  cout<<" Generating min dif pairs of length 1000... \n";
+  generatingMinDifPairs(1000,"./RandomTestFiles/m1000.txt");
 }
 
