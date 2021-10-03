@@ -23,3 +23,7 @@ runControlledTests: Main.cpp
 	./HashGenerator ControlledTestFiles/loremIpsum1.txt
 	#---------------------------------------
 	./HashGenerator ControlledTestFiles/loremIpsum2.txt
+
+lineTest: LineTest.cpp
+	g++ LineTest.cpp -o LineTest
+	./LineTest ./ControlledTestFiles/konstitucija.txt
