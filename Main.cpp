@@ -3,6 +3,8 @@
 #include <iostream>
 #include <bitset>
 #include <map>
+#include <fstream>
+#include <sstream>
 
 using namespace std;
 
@@ -25,18 +27,39 @@ map<string, string> hexMap {
     {"1111", "F"},
 };
 
+
+void getInputFromFile(string &input, string fileLocation);
+void getInputByHand(string &input);
 vector<string> stringSplit(string input);
 void convertToBitStrings(vector<string> &splits);
 string mergeBitStrings(vector<string> &splits);
 string binaryToHex(string input);
 
 
-int main() {
-  string input = "a";
+
+int main(int argc, char *argv[]) {
+  string input;
+  argc > 1 ? getInputFromFile(input, argv[1]) : getInputByHand(input);
+
   vector<string> splits = stringSplit(input);
   convertToBitStrings(splits);
   string hash = binaryToHex(mergeBitStrings(splits));
   cout<<hash;
+}
+
+
+void getInputFromFile(string &input, string fileLocation) {
+  stringstream fileStream;
+  ifstream file;
+  file.open(fileLocation);
+  fileStream<<file.rdbuf();
+  
+  input= fileStream.str();
+}
+
+void getInputByHand(string &input) {
+  cout<<"input a string: ";
+  cin>>input;
 }
 
 vector<string> stringSplit(string input) {
@@ -66,7 +89,6 @@ void convertToBitStrings(vector<string> &splits) {
 }
 
 
-//manipulation functions 
 string andGate(string input1, string input2) {
   string outPut;
   for(int i = 0; i<input1.size(); i++) {
