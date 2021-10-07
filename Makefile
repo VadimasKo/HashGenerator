@@ -4,6 +4,9 @@ main: Main.cpp
 run: Main.cpp
 	g++ Main.cpp -o HashGenerator.exe && ./HashGenerator.exe
 
+generateRandom: GenerateRandom.cpp
+	g++ GenerateRandom.cpp -o GenerateRandom.exe && ./GenerateRandom.exe
+
 runControlledTests: Main.cpp
 	g++ Main.cpp -o HashGenerator.exe
 	#---------------------------------------
@@ -14,19 +17,20 @@ runControlledTests: Main.cpp
 	#    4) 1000 char random generated string
 	#    5) char used in 4 test with 1st char changed 
 	#---------------------------------------
-	./HashGenerator ControlledTestFiles/a.txt
+	./HashGenerator.exe ControlledTestFiles/a.txt
 	#---------------------------------------
-	./HashGenerator ControlledTestFiles/b.txt
+	./HashGenerator.exe ControlledTestFiles/b.txt
 	#---------------------------------------
-	./HashGenerator ControlledTestFiles/emptyFile.txt
+	./HashGenerator.exe ControlledTestFiles/emptyFile.txt
 	#---------------------------------------
-	./HashGenerator ControlledTestFiles/loremIpsum1.txt
+	./HashGenerator.exe ControlledTestFiles/loremIpsum1.txt
 	#---------------------------------------
-	./HashGenerator ControlledTestFiles/loremIpsum2.txt
+	./HashGenerator.exe ControlledTestFiles/loremIpsum2.txt
 
-lineTest: LineTest.cpp
+runLineTest: LineTest.cpp
 	g++ LineTest.cpp -o LineTest.exe
 	./LineTest.exe ./ControlledTestFiles/konstitucija.txt
 
-generateRandom: GenerateRandom.cpp
-	g++ GenerateRandom.cpp -o GenerateRandom.exe && ./GenerateRandom.exe
+runDifferenceTest:	HashDiffTest.cpp
+	g++ HashDiffTest.cpp -o HashDiffTest.exe
+	./HashDiffTest.exe
