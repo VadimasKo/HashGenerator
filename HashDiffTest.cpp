@@ -41,11 +41,11 @@ vector<string> getPairs(string filePath) {
 }
 
 vector<string> getHashes(vector<string> pairs) {
-  string command = "./HashGenerator.exe  test ";
+  string command = "./HashGenerator.exe test ";
   vector<string> hashes;
 
   for(string pair : pairs) {
-    cout<<(pipeCommand(command+ '\"' + pair + '\"'));
+    pairs.push_back(pipeCommand(command+ pair));
   }
   for(string hash : hashes) {
     cout<<hash<<endl;
