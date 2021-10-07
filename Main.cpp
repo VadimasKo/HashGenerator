@@ -40,8 +40,6 @@ int main(int argc, char *argv[]) {
   if(argc == 1 )     getInputByHand(input);
   else if(argc == 2) getInputFromFile(input, argv[1]);
   else if(argc == 3) input=argv[2];
-  
-  cout<<input;
 
   vector<string> splits = stringSplit(input);
   convertToBitStrings(splits);
