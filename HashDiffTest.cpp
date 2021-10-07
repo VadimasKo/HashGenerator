@@ -35,16 +35,17 @@ vector<string> getPairs(string filePath) {
     lineStream>>pair;
     pairs.push_back(pair);
   }
-
+  pairs.pop_back();
+  pairs.pop_back();
   return pairs;
 }
 
 vector<string> getHashes(vector<string> pairs) {
-  string command = "./HashGenerator.exe  test";
+  string command = "./HashGenerator.exe  test ";
   vector<string> hashes;
 
   for(string pair : pairs) {
-    hashes.push_back(pipeCommand(command+pair));
+    cout<<(pipeCommand(command+ '\"' + pair + '\"'));
   }
   for(string hash : hashes) {
     cout<<hash<<endl;
