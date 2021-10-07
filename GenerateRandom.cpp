@@ -16,7 +16,7 @@ class RandInt{
       int operator ()() {return dist(mt);}
 };
 
-RandInt rnd {21,127};
+RandInt rnd {33,125};
 
 void generateUniquePairs(int size, string fileName) {
   ofstream file;
