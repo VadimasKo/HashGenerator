@@ -8,13 +8,11 @@ using namespace std;
 
 string pipeCommand(string command);
 vector<string> getPairs(string filePath);
+vector<string> getHashes(vector<string> pairs);
 
 int main() {
-  string command = "./HashGenerator.exe ./RandomTestFiles/10.txt";
-  string buffer = pipeCommand(command);
-  cout<<buffer.length()<<buffer;
-  getPairs("./RandomTestFiles/10.txt");
-  return 0;
+  getHashes(getPairs("./RandomTestFiles/10.txt"));
+
 }
 
 
@@ -34,13 +32,24 @@ vector<string> getPairs(string filePath) {
     stringstream lineStream(line);
     lineStream>>pair;
     pairs.push_back(pair);
-    cout<<pair<<'\t';
     lineStream>>pair;
-    cout<<pair<<'\n';
     pairs.push_back(pair);
   }
 
   return pairs;
+}
+
+vector<string> getHashes(vector<string> pairs) {
+  string command = "./HashGenerator.exe  test";
+  vector<string> hashes;
+
+  for(string pair : pairs) {
+    hashes.push_back(pipeCommand(command+pair));
+  }
+  for(string hash : hashes) {
+    cout<<hash<<endl;
+  }
+  return hashes;
 }
 
 
