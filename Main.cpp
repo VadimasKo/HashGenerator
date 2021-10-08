@@ -8,26 +8,6 @@
 
 using namespace std;
 
-const string initialKey = "1011110011011001010101101011001011000111001111110100101110010001011100000001011010101011010100111001001100011111010001000011111010101000000110010001110010110011010010101010010110001001110001001011110100000010110010000101110100100001101111010100011110001010";
-map<string, string> hexMap {
-    {"0001", "1"},
-    {"0010", "2"},
-    {"0011", "3"},
-    {"0100", "4"},
-    {"0101", "5"},
-    {"0110", "6"},
-    {"0111", "7"},
-    {"1000", "8"},
-    {"1001", "9"},
-    {"1010", "A"},
-    {"1011", "B"},
-    {"1100", "C"},
-    {"1101", "D"},
-    {"1110", "E"},
-    {"1111", "F"},
-};
-
-
 void getInputFromFile(string &input, string fileLocation);
 void getInputByHand(string &input);
 vector<string> stringSplit(string input);
@@ -36,15 +16,35 @@ string mergeBitStrings(vector<string> &splits);
 string binaryToHex(string input);
 
 
+const string initialKey = "1011110011011001010101101011001011000111001111110100101110010001011100000001011010101011010100111001001100011111010001000011111010101000000110010001110010110011010010101010010110001001110001001011110100000010110010000101110100100001101111010100011110001010";
+map<string, string> hexMap {
+  {"0001", "1"},
+  {"0010", "2"},
+  {"0011", "3"},
+  {"0100", "4"},
+  {"0101", "5"},
+  {"0110", "6"},
+  {"0111", "7"},
+  {"1000", "8"},
+  {"1001", "9"},
+  {"1010", "A"},
+  {"1011", "B"},
+  {"1100", "C"},
+  {"1101", "D"},
+  {"1110", "E"},
+  {"1111", "F"},
+};
 
 int main(int argc, char *argv[]) {
   string input;
-  argc > 1 ? getInputFromFile(input, argv[1]) : getInputByHand(input);
+  if(argc == 1 )     getInputByHand(input);
+  else if(argc == 2) getInputFromFile(input, argv[1]);
+  else if(argc == 3) input=argv[2];
 
   vector<string> splits = stringSplit(input);
   convertToBitStrings(splits);
   string hash = binaryToHex(mergeBitStrings(splits));
-  cout<<hash;
+  cout<<"\t"<<hash<<endl;
 }
 
 
